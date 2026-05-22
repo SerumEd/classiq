@@ -1,0 +1,939 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Onboarding — classIQ</title>
+<meta name="description" content="Live in a single day. How classIQ onboarding works, step by step." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
+<style>
+  /* ========= Hero ========= */
+  .ob-hero { padding: 80px 0 24px; }
+  .ob-hero h1 { font-size: clamp(40px, 5vw, 68px); }
+  .ob-hero .lede { margin-top: 22px; max-width: 64ch; }
+
+  .ob-meta {
+    margin-top: 36px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .ob-meta .item {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px 18px;
+  }
+  .ob-meta .key { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .ob-meta .val { font-size: 22px; font-weight: 500; letter-spacing: -.02em; margin-top: 4px; }
+  .ob-meta .sub { font-size: 12px; color: var(--ink-2); margin-top: 4px; }
+
+  /* ========= Timeline ========= */
+  .ob-track { margin: 64px 0 96px; position: relative; }
+  .ob-track::before {
+    content:""; position: absolute;
+    left: 38px; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, var(--line) 6%, var(--line) 94%, transparent);
+  }
+  .ob-step {
+    position: relative;
+    padding: 56px 0 56px 96px;
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 56px;
+    align-items: start;
+  }
+  .ob-num {
+    position: absolute;
+    left: 0; top: 64px;
+    width: 76px; height: 76px;
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 22px; font-weight: 500; letter-spacing: -.02em;
+    box-shadow: 0 0 0 8px var(--cream), 0 4px 18px -8px rgba(11,42,48,.4);
+    transform: scale(.5); opacity: 0;
+  }
+  .ob-step.is-in .ob-num { animation: ob-num-in .55s cubic-bezier(.2,.7,.2,1) forwards; }
+  @keyframes ob-num-in { to { transform: scale(1); opacity: 1; } }
+
+  .ob-side h2 { font-size: clamp(28px, 3vw, 38px); margin-top: 16px; }
+  .ob-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    padding: 4px 11px;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--accent, var(--teal-700)) 12%, var(--paper));
+    border: 1px solid color-mix(in oklab, var(--accent, var(--teal-700)) 30%, var(--line));
+    color: var(--accent, var(--teal-700));
+  }
+  .ob-pill .d { width: 6px; height: 6px; border-radius: 50%; background: var(--accent, var(--teal-700)); }
+  .ob-side p.desc { margin-top: 14px; max-width: 50ch; font-size: 17px; line-height: 1.6; color: var(--ink-2); }
+  .ob-tasks {
+    margin-top: 18px;
+    list-style: none; padding: 0;
+    display: flex; flex-direction: column; gap: 8px;
+    max-width: 460px;
+  }
+  .ob-tasks li {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 13.5px; color: var(--ink-2);
+  }
+  .ob-tasks li::before {
+    content: "✓"; color: var(--accent, var(--teal-700));
+    font-family: var(--font-mono); font-size: 13px;
+    margin-top: 1px;
+    flex: none;
+  }
+  .ob-time {
+    margin-top: 18px;
+    display: inline-flex;
+    align-items: center; gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--muted);
+  }
+  .ob-time .icon { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--accent, var(--teal-700)); position: relative; }
+  .ob-time .icon::before {
+    content:""; position: absolute;
+    left: 50%; top: 50%;
+    width: 4px; height: 2px;
+    background: var(--accent, var(--teal-700));
+    transform-origin: 0 50%;
+    transform: rotate(0deg);
+    animation: clock 8s linear infinite;
+  }
+  @keyframes clock { to { transform: rotate(360deg); } }
+
+  /* Stage card */
+  .ob-stage {
+    position: relative;
+    background: linear-gradient(180deg, var(--cream-2), var(--paper));
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    min-height: 460px;
+    overflow: hidden;
+    padding: 28px;
+    box-shadow: var(--shadow);
+    opacity: 0; transform: translateY(20px);
+    transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1);
+  }
+  .ob-step.is-in .ob-stage { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) {
+    .ob-stage, .ob-stage * { animation: none !important; transition: opacity .2s linear !important; }
+  }
+
+  /* ============================================
+     STEP 1 · CSV upload + preview
+     ============================================ */
+  .csv-drop {
+    background: var(--paper);
+    border: 2px dashed color-mix(in oklab, var(--teal-700) 30%, var(--line));
+    border-radius: 14px;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+  }
+  .csv-icon {
+    width: 56px; height: 70px;
+    margin: 0 auto;
+    background: linear-gradient(180deg, #fff, #f4eee0);
+    border-radius: 4px;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--teal-700);
+    box-shadow: 0 6px 18px -8px rgba(11,42,48,.25);
+    transform: translateY(8px);
+    opacity: 0;
+  }
+  .csv-icon::after {
+    content: "";
+    position: absolute; right: 0; top: 0;
+    border-left: 12px solid transparent;
+    border-bottom: 12px solid var(--paper);
+  }
+  .ob-step.is-in .csv-icon { animation: csv-drop .55s cubic-bezier(.2,.7,.2,1) .3s forwards; }
+  @keyframes csv-drop { 0% { transform: translateY(-30px); opacity: 0; } 60% { transform: translateY(4px); opacity: 1; } 100% { transform: translateY(0); opacity: 1; } }
+
+  .csv-name {
+    margin-top: 14px;
+    font-family: var(--font-mono); font-size: 11.5px;
+    color: var(--muted); letter-spacing: .04em;
+    opacity: 0;
+  }
+  .ob-step.is-in .csv-name { animation: fade-in .4s ease .8s forwards; }
+  @keyframes fade-in { to { opacity: 1; } }
+
+  .csv-prog {
+    margin-top: 12px;
+    height: 5px;
+    background: var(--line-2);
+    border-radius: 3px;
+    overflow: hidden;
+    opacity: 0;
+  }
+  .csv-prog::before {
+    content: ""; display: block; height: 100%;
+    background: linear-gradient(90deg, var(--teal-600), var(--teal-700));
+    width: 0;
+  }
+  .ob-step.is-in .csv-prog { animation: fade-in .3s ease 1.0s forwards; }
+  .ob-step.is-in .csv-prog::before { animation: csv-fill 1.6s ease 1.1s forwards; }
+  @keyframes csv-fill { to { width: 100%; } }
+
+  .csv-table {
+    margin-top: 18px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .csv-table .row {
+    display: grid;
+    grid-template-columns: 36px 1.4fr 1fr 0.8fr 0.8fr;
+    gap: 10px;
+    padding: 9px 14px;
+    font-size: 12px;
+    border-bottom: 1px solid var(--line);
+    opacity: 0; transform: translateY(8px);
+  }
+  .csv-table .row:last-child { border-bottom: 0; }
+  .csv-table .row.h {
+    background: var(--cream-2);
+    font-family: var(--font-mono); font-size: 10px;
+    text-transform: uppercase; letter-spacing: .1em;
+    color: var(--muted);
+  }
+  .ob-step.is-in .csv-table .row { animation: csv-row .4s ease forwards; }
+  .ob-step.is-in .csv-table .row.h { animation-delay: 2.6s; }
+  .ob-step.is-in .csv-table .row:nth-child(2) { animation-delay: 2.8s; }
+  .ob-step.is-in .csv-table .row:nth-child(3) { animation-delay: 2.95s; }
+  .ob-step.is-in .csv-table .row:nth-child(4) { animation-delay: 3.1s; }
+  .ob-step.is-in .csv-table .row:nth-child(5) { animation-delay: 3.25s; }
+  .ob-step.is-in .csv-table .row:nth-child(6) { animation-delay: 3.4s; }
+  @keyframes csv-row { to { opacity: 1; transform: translateY(0); } }
+  .csv-success {
+    position: absolute;
+    right: 22px; bottom: 22px;
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex; gap: 10px; align-items: center;
+    box-shadow: var(--shadow);
+    opacity: 0; transform: translateY(8px);
+  }
+  .ob-step.is-in .csv-success { animation: csv-row .5s ease 4s forwards; }
+  .csv-success .tick {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: #66e29c; color: #0b2a30;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+  .csv-success .body .num { font-size: 14px; font-weight: 500; }
+  .csv-success .body .sub { font-family: var(--font-mono); font-size: 10px; opacity: .65; letter-spacing: .08em; }
+
+  /* ============================================
+     STEP 2 · SMS invites + acceptance grid
+     ============================================ */
+  .inv-phone {
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 22px;
+    padding: 14px;
+    max-width: 200px;
+    box-shadow: var(--shadow-lg);
+    position: absolute;
+    left: 28px; top: 28px;
+  }
+  .inv-phone .hd { font-family: var(--font-mono); font-size: 9.5px; opacity: .6; letter-spacing: .12em; text-transform: uppercase; }
+  .inv-phone .ttl { font-size: 14px; font-weight: 500; margin-top: 4px; }
+  .inv-phone .msg { background: rgba(255,255,255,.08); border-radius: 10px; padding: 9px 11px; font-size: 11px; margin-top: 10px; line-height: 1.35; }
+  .inv-phone .msg b { font-weight: 500; }
+
+  .inv-fly {
+    position: absolute;
+    left: 200px; top: 60px;
+    width: 18px; height: 18px;
+    background: var(--coral);
+    border-radius: 4px;
+    color: white;
+    font-size: 11px;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0;
+  }
+  .ob-step.is-in .inv-fly { animation: inv-fly 1.6s ease forwards; }
+  .ob-step.is-in .inv-fly.f1 { animation-delay: .9s; }
+  .ob-step.is-in .inv-fly.f2 { animation-delay: 1.2s; --y: -10px; --x: 160px; }
+  .ob-step.is-in .inv-fly.f3 { animation-delay: 1.5s; --y: 30px; --x: 200px; }
+  .ob-step.is-in .inv-fly.f4 { animation-delay: 1.8s; --y: -30px; --x: 180px; }
+  .ob-step.is-in .inv-fly.f5 { animation-delay: 2.1s; --y: 50px; --x: 220px; }
+  @keyframes inv-fly {
+    0% { opacity: 0; transform: translate(0, 0); }
+    20% { opacity: 1; }
+    100% { opacity: 0; transform: translate(var(--x, 180px), var(--y, 10px)); }
+  }
+
+  .inv-grid {
+    position: absolute;
+    right: 24px; bottom: 24px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px;
+    max-width: 280px;
+    box-shadow: var(--shadow-sm);
+  }
+  .inv-grid .hd { font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .inv-grid .cnt { font-size: 22px; font-weight: 500; letter-spacing: -.02em; margin-top: 4px; }
+  .inv-grid .cnt .of { font-family: var(--font-mono); font-size: 13px; color: var(--muted); }
+  .inv-dots {
+    margin-top: 12px;
+    display: grid; grid-template-columns: repeat(12, 1fr);
+    gap: 4px;
+  }
+  .inv-dots span {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--cream-2);
+    border: 1px solid var(--line);
+    transform: scale(.8);
+    transition: background .35s ease, border-color .35s ease, transform .35s ease;
+  }
+  .ob-step.is-in .inv-dots span.joined { background: var(--teal-600); border-color: var(--teal-700); transform: scale(1); }
+
+  .inv-bar {
+    margin-top: 12px;
+    height: 4px;
+    background: var(--line-2);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .inv-bar::after { content:""; display:block; height:100%; background: var(--teal-700); width: 0; }
+  .ob-step.is-in .inv-bar::after { animation: inv-bar-fill 3.5s ease 1.2s forwards; }
+  @keyframes inv-bar-fill { to { width: 91%; } }
+
+  /* ============================================
+     STEP 3 · Channels switching on
+     ============================================ */
+  .ch-list {
+    display: flex; flex-direction: column; gap: 10px;
+    max-width: 380px;
+    margin: 0 auto;
+  }
+  .ch-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 12px 14px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    transition: background .4s ease, border-color .4s ease;
+  }
+  .ch-icon {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    background: var(--cream-2);
+    border: 1px solid var(--line);
+    color: var(--muted);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    transition: background .4s ease, color .4s ease, border-color .4s ease;
+  }
+  .ch-info { flex: 1; min-width: 0; }
+  .ch-name { font-size: 13.5px; font-weight: 500; }
+  .ch-sub { font-family: var(--font-mono); font-size: 10.5px; color: var(--muted); margin-top: 2px; letter-spacing: .04em; }
+  .ch-switch {
+    width: 38px; height: 22px;
+    background: var(--line);
+    border-radius: 999px;
+    position: relative;
+    transition: background .35s ease;
+  }
+  .ch-switch::after {
+    content: "";
+    position: absolute;
+    left: 2px; top: 2px;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--paper);
+    box-shadow: 0 2px 5px rgba(0,0,0,.18);
+    transition: transform .35s cubic-bezier(.2,.7,.2,1), background .35s ease;
+  }
+  .ob-step.is-in .ch-item.live { background: color-mix(in oklab, var(--teal-50) 75%, var(--paper)); border-color: color-mix(in oklab, var(--teal-700) 25%, var(--line)); }
+  .ob-step.is-in .ch-item.live .ch-icon { background: var(--teal-700); color: var(--cream); border-color: var(--teal-700); }
+  .ob-step.is-in .ch-item.live .ch-switch { background: var(--teal-700); }
+  .ob-step.is-in .ch-item.live .ch-switch::after { transform: translateX(16px); background: var(--cream); }
+
+  .ob-step.is-in .ch-item.live:nth-child(1) { transition-delay: .3s; }
+  .ob-step.is-in .ch-item.live:nth-child(1) .ch-icon { transition-delay: .3s; }
+  .ob-step.is-in .ch-item.live:nth-child(1) .ch-switch,
+  .ob-step.is-in .ch-item.live:nth-child(1) .ch-switch::after { transition-delay: .3s; }
+  .ob-step.is-in .ch-item.live:nth-child(2) { transition-delay: .7s; }
+  .ob-step.is-in .ch-item.live:nth-child(2) .ch-icon { transition-delay: .7s; }
+  .ob-step.is-in .ch-item.live:nth-child(2) .ch-switch,
+  .ob-step.is-in .ch-item.live:nth-child(2) .ch-switch::after { transition-delay: .7s; }
+  .ob-step.is-in .ch-item.live:nth-child(3) { transition-delay: 1.1s; }
+  .ob-step.is-in .ch-item.live:nth-child(3) .ch-icon { transition-delay: 1.1s; }
+  .ob-step.is-in .ch-item.live:nth-child(3) .ch-switch,
+  .ob-step.is-in .ch-item.live:nth-child(3) .ch-switch::after { transition-delay: 1.1s; }
+  .ob-step.is-in .ch-item.live:nth-child(4) { transition-delay: 1.5s; }
+  .ob-step.is-in .ch-item.live:nth-child(4) .ch-icon { transition-delay: 1.5s; }
+  .ob-step.is-in .ch-item.live:nth-child(4) .ch-switch,
+  .ob-step.is-in .ch-item.live:nth-child(4) .ch-switch::after { transition-delay: 1.5s; }
+  .ob-step.is-in .ch-item.live:nth-child(5) { transition-delay: 1.9s; }
+  .ob-step.is-in .ch-item.live:nth-child(5) .ch-icon { transition-delay: 1.9s; }
+  .ob-step.is-in .ch-item.live:nth-child(5) .ch-switch,
+  .ob-step.is-in .ch-item.live:nth-child(5) .ch-switch::after { transition-delay: 1.9s; }
+
+  .ob-banner {
+    position: absolute;
+    right: 24px; bottom: 24px;
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 12px;
+    padding: 10px 14px;
+    display: flex; gap: 10px; align-items: center;
+    box-shadow: var(--shadow);
+    opacity: 0; transform: translateY(8px);
+  }
+  .ob-banner .pulse { width: 8px; height: 8px; border-radius: 50%; background: #66e29c; animation: ob-pulse 1.4s infinite ease-in-out; }
+  @keyframes ob-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+  .ob-banner .lbl { font-family: var(--font-mono); font-size: 10px; opacity: .65; letter-spacing: .1em; text-transform: uppercase; }
+  .ob-banner .val { font-size: 13px; font-weight: 500; }
+  .ob-step.is-in .ob-banner { animation: csv-row .5s ease 2.6s forwards; }
+
+  /* ============================================
+     STEP 4 · Auto-rollover (calendar flip + grade promote)
+     ============================================ */
+  .ro-stage { display: grid; grid-template-columns: 130px 1fr; gap: 18px; height: 100%; align-items: stretch; }
+  .ro-cal {
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 14px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .ro-cal .month {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    opacity: .65;
+    margin-bottom: 8px;
+  }
+  .ro-cal .year {
+    font-size: 26px;
+    font-weight: 500;
+    letter-spacing: -.02em;
+    line-height: 1;
+    position: relative;
+  }
+  .ro-cal .year .next {
+    position: absolute;
+    left: 0; top: 0;
+    opacity: 0;
+    transform: translateY(14px);
+    color: #66e29c;
+  }
+  .ob-step.is-in .ro-cal .year .now { animation: yr-out .8s ease 1.0s forwards; }
+  .ob-step.is-in .ro-cal .year .next { animation: yr-in .8s ease 1.0s forwards; }
+  @keyframes yr-out { to { opacity: 0; transform: translateY(-14px); } }
+  @keyframes yr-in  { to { opacity: 1; transform: translateY(0); } }
+
+  .ro-cal .grid {
+    margin-top: 14px;
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px;
+  }
+  .ro-cal .grid span {
+    aspect-ratio: 1;
+    border-radius: 4px;
+    background: rgba(255,255,255,.05);
+  }
+  .ro-cal .stamp {
+    position: absolute;
+    right: -6px; bottom: 14px;
+    transform: rotate(-12deg) scale(.6);
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: .14em;
+    background: var(--coral);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 6px;
+    opacity: 0;
+  }
+  .ob-step.is-in .ro-cal .stamp { animation: stamp-in .4s cubic-bezier(.2,.7,.2,1) 2.0s forwards; }
+  @keyframes stamp-in { to { opacity: 1; transform: rotate(-12deg) scale(1); } }
+
+  .ro-classes {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px 18px;
+    display: flex; flex-direction: column; gap: 7px;
+  }
+  .ro-classes .hd { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .ro-cls {
+    display: grid;
+    grid-template-columns: 1fr 24px 1fr;
+    align-items: center;
+    gap: 10px;
+  }
+  .ro-cls .a, .ro-cls .b {
+    background: var(--cream-2);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 7px 10px;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--ink);
+    display: flex; justify-content: space-between; gap: 8px;
+  }
+  .ro-cls .b {
+    background: color-mix(in oklab, var(--teal-50) 80%, var(--paper));
+    border-color: color-mix(in oklab, var(--teal-700) 22%, var(--line));
+    color: var(--teal-700);
+    transform: translateX(-14px);
+    opacity: 0;
+  }
+  .ro-cls .ct { font-family: var(--font-mono); font-size: 10.5px; opacity: .65; }
+  .ro-cls .ar {
+    color: var(--muted-2);
+    font-family: var(--font-mono); font-size: 11px;
+    opacity: 0;
+    text-align: center;
+  }
+  .ob-step.is-in .ro-cls .ar { animation: ar-in .3s ease forwards; }
+  .ob-step.is-in .ro-cls .b { animation: cls-in .5s cubic-bezier(.2,.7,.2,1) forwards; }
+  .ob-step.is-in .ro-cls:nth-of-type(1) .ar { animation-delay: 1.4s; }
+  .ob-step.is-in .ro-cls:nth-of-type(1) .b  { animation-delay: 1.55s; }
+  .ob-step.is-in .ro-cls:nth-of-type(2) .ar { animation-delay: 1.7s; }
+  .ob-step.is-in .ro-cls:nth-of-type(2) .b  { animation-delay: 1.85s; }
+  .ob-step.is-in .ro-cls:nth-of-type(3) .ar { animation-delay: 2.0s; }
+  .ob-step.is-in .ro-cls:nth-of-type(3) .b  { animation-delay: 2.15s; }
+  .ob-step.is-in .ro-cls:nth-of-type(4) .ar { animation-delay: 2.3s; }
+  .ob-step.is-in .ro-cls:nth-of-type(4) .b  { animation-delay: 2.45s; }
+  @keyframes ar-in  { to { opacity: 1; } }
+  @keyframes cls-in { to { opacity: 1; transform: translateX(0); } }
+
+  .ro-done {
+    margin-top: auto;
+    background: color-mix(in oklab, var(--teal-50) 80%, var(--paper));
+    border: 1px solid color-mix(in oklab, var(--teal-700) 22%, var(--line));
+    border-radius: 10px;
+    padding: 10px 12px;
+    display: flex; gap: 10px; align-items: center;
+    opacity: 0; transform: translateY(8px);
+  }
+  .ro-done .tick { width: 24px; height: 24px; border-radius: 50%; background: var(--teal-700); color: white; display: flex; align-items: center; justify-content: center; font-size: 13px; }
+  .ro-done .lbl { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--teal-700); }
+  .ro-done .val { font-size: 13px; font-weight: 500; }
+  .ob-step.is-in .ro-done { animation: csv-row .5s ease 3s forwards; }
+
+  /* ===== summary ===== */
+  .ob-summary {
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 24px;
+    padding: 56px 56px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .ob-summary h2 { color: var(--cream); font-size: clamp(28px, 3.2vw, 42px); }
+  .ob-summary p { color: color-mix(in oklab, var(--cream) 75%, transparent); margin-top: 12px; font-size: 16.5px; line-height: 1.6; }
+  .ob-summary .total {
+    display: flex; align-items: baseline; gap: 14px;
+  }
+  .ob-summary .total .num { font-size: 88px; font-weight: 300; letter-spacing: -.04em; line-height: 1; }
+  .ob-summary .total .unit { font-family: var(--font-mono); font-size: 13px; opacity: .65; letter-spacing: .08em; text-transform: uppercase; }
+  .ob-summary .ticks {
+    margin-top: 18px;
+    list-style: none; padding: 0;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .ob-summary .ticks li {
+    display: flex; gap: 10px; align-items: center;
+    font-size: 13.5px; color: color-mix(in oklab, var(--cream) 90%, transparent);
+  }
+  .ob-summary .ticks li::before {
+    content: "✓"; font-family: var(--font-mono); color: #66e29c;
+  }
+
+  /* ===== responsive ===== */
+  @media (max-width: 960px) {
+    .ob-track::before { left: 18px; }
+    .ob-step { padding-left: 64px; grid-template-columns: 1fr; gap: 32px; }
+    .ob-num { left: -16px; top: 56px; width: 56px; height: 56px; font-size: 18px; box-shadow: 0 0 0 6px var(--cream); }
+    .ob-meta { grid-template-columns: 1fr 1fr; }
+    .ob-summary { grid-template-columns: 1fr; padding: 36px 28px; gap: 32px; }
+    .ro-stage { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .ob-step { padding-left: 50px; }
+    .ob-stage { min-height: 380px; padding: 18px; }
+    .inv-phone { position: relative; left: 0; top: 0; max-width: 100%; }
+    .inv-grid { position: relative; right: auto; bottom: auto; margin-top: 14px; max-width: 100%; }
+    .csv-success { right: 14px; bottom: 14px; padding: 9px 11px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="brand" aria-label="classIQ home"><img src="assets/logo.png" alt="classIQ" /></a>
+    <nav class="nav-links">
+      <a href="features.html">Features</a>
+      <a href="who.html">Designed for</a>
+      <a href="onboarding.html" style="color:var(--teal-800); font-weight:500;">Onboarding</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="roadmap.html">Roadmap</a>
+      <a href="about.html">About</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#" class="btn btn-ghost">Sign in</a>
+      <a href="contact.html" class="btn btn-primary">Request a demo</a>
+    </div>
+  </div>
+</header>
+
+<section class="ob-hero" data-screen-label="01 Hero">
+  <div class="container">
+    <span class="eyebrow">Onboarding · No IT department needed</span>
+    <h1 style="margin-top:18px;">Live by <span class="italic-serif">tomorrow.</span></h1>
+    <p class="lede">classIQ is built for low-friction adoption. Most schools complete onboarding in a single day — from CSV upload to a fully running platform.</p>
+
+    <div class="ob-meta">
+      <div class="item"><div class="key">Typical timeline</div><div class="val">1 day</div><div class="sub">From signup to fully live</div></div>
+      <div class="item"><div class="key">IT effort</div><div class="val">None</div><div class="sub">No installation, no servers</div></div>
+      <div class="item"><div class="key">Migration</div><div class="val">CSV / Excel</div><div class="sub">Or we help you import</div></div>
+      <div class="item"><div class="key">Year 2 rework</div><div class="val">0 days</div><div class="sub">Auto-rollover handles it</div></div>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="02 Steps">
+  <div class="container">
+    <div class="ob-track">
+
+      <!-- ===== STEP 1 ===== -->
+      <article class="ob-step" data-screen-label="Step 01" style="--accent: var(--teal-700);">
+        <div class="ob-num">01</div>
+        <div class="ob-side">
+          <span class="ob-pill"><span class="d"></span>Morning · Setup</span>
+          <h2>Sign up &amp; import your school.</h2>
+          <p class="desc">Upload your class lists and parent contacts via CSV — or send us your Excel and we'll import it for you. Most schools are up by lunch on day one.</p>
+          <ul class="ob-tasks">
+            <li>Create your school account at classiq.in</li>
+            <li>Upload class lists + parent contacts (CSV / XLSX)</li>
+            <li>Confirm grade structure (CBSE, ICSE, State boards)</li>
+            <li>Pick your school colours &amp; logo</li>
+          </ul>
+          <div class="ob-time"><span class="icon"></span>~2 hours · admin time</div>
+        </div>
+        <div class="ob-side">
+          <div class="ob-stage">
+            <div class="csv-drop">
+              <div class="csv-icon">CSV</div>
+              <div class="csv-name">greenfield_students_2026.csv · 142 KB</div>
+              <div class="csv-prog"></div>
+            </div>
+
+            <div class="csv-table">
+              <div class="row h"><span>#</span><span>Name</span><span>Class</span><span>Parent</span><span>Phone</span></div>
+              <div class="row"><span>01</span><span>Aanya R</span><span>4-B</span><span>Smita R</span><span>98xxx 30012</span></div>
+              <div class="row"><span>02</span><span>Aarav K</span><span>4-B</span><span>Priya K</span><span>98xxx 30013</span></div>
+              <div class="row"><span>03</span><span>Adhavan R</span><span>1-B</span><span>Selvi R</span><span>98xxx 30014</span></div>
+              <div class="row"><span>04</span><span>Ananya P</span><span>6-A</span><span>Lakshmi P</span><span>98xxx 30015</span></div>
+              <div class="row"><span>05</span><span>Arjun S</span><span>5-A</span><span>Ramesh S</span><span>98xxx 30016</span></div>
+            </div>
+
+            <div class="csv-success">
+              <div class="tick">✓</div>
+              <div class="body">
+                <div class="num">720 students · 38 classes</div>
+                <div class="sub">imported · 2 mins · 0 errors</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===== STEP 2 ===== -->
+      <article class="ob-step" data-screen-label="Step 02" style="--accent: var(--coral);">
+        <div class="ob-num">02</div>
+        <div class="ob-side">
+          <span class="ob-pill"><span class="d"></span>Mid-day · Invite</span>
+          <h2>Invite staff &amp; families.</h2>
+          <p class="desc">One-tap invites by SMS. Teachers and parents tap a link, set a name, and they're in. No IT support tickets, no "please install this app on their behalf".</p>
+          <ul class="ob-tasks">
+            <li>Send SMS / WhatsApp invites in bulk</li>
+            <li>Optional QR code for in-person enrolment</li>
+            <li>Track invite acceptance in real time</li>
+            <li>Reminders auto-sent to non-joiners</li>
+          </ul>
+          <div class="ob-time"><span class="icon"></span>~few hours · until 90% joined</div>
+        </div>
+        <div class="ob-side">
+          <div class="ob-stage">
+            <div class="inv-phone">
+              <div class="hd">Greenfield Primary</div>
+              <div class="ttl">Invite to classIQ</div>
+              <div class="msg">Hi! <b>Greenfield Primary</b> has moved its parent communication to classIQ. Tap to join Aanya's class — <b>classiq.in/j/4f2x9</b></div>
+            </div>
+
+            <span class="inv-fly f1">→</span>
+            <span class="inv-fly f2">→</span>
+            <span class="inv-fly f3">→</span>
+            <span class="inv-fly f4">→</span>
+            <span class="inv-fly f5">→</span>
+
+            <div class="inv-grid">
+              <div class="hd">Joined</div>
+              <div class="cnt">113<span class="of"> / 124</span></div>
+              <div class="inv-bar"></div>
+              <div class="inv-dots">
+                <span class="joined"></span><span class="joined"></span><span class="joined"></span>
+                <span class="joined"></span><span class="joined"></span><span class="joined"></span>
+                <span class="joined"></span><span class="joined"></span><span class="joined"></span>
+                <span class="joined"></span><span class="joined"></span><span class="joined"></span>
+                <span class="joined"></span><span class="joined"></span><span class="joined"></span>
+                <span class="joined"></span><span class="joined"></span><span class="joined"></span>
+                <span class="joined"></span><span class="joined"></span><span class="joined"></span>
+                <span class="joined"></span><span class="joined"></span><span class="joined"></span>
+                <span class="joined"></span><span class="joined"></span><span class="joined"></span>
+                <span class="joined"></span><span class="joined"></span><span class="joined"></span>
+                <span class="joined"></span><span class="joined"></span><span class="joined"></span>
+                <span class="joined"></span><span class="joined"></span><span class="joined"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===== STEP 3 ===== -->
+      <article class="ob-step" data-screen-label="Step 03" style="--accent: var(--teal-700);">
+        <div class="ob-num">03</div>
+        <div class="ob-side">
+          <span class="ob-pill"><span class="d"></span>Afternoon · Switch on</span>
+          <h2>Turn on channels.</h2>
+          <p class="desc">Class channels, notice board and the school feed go live in one tap — branded for your school. From this point on, communication runs on classIQ.</p>
+          <ul class="ob-tasks">
+            <li>One-click activation per module</li>
+            <li>School branding (logo, colours, name)</li>
+            <li>Default policies for moderation &amp; privacy</li>
+            <li>Welcome notice to all parents</li>
+          </ul>
+          <div class="ob-time"><span class="icon"></span>~1 hour · across modules</div>
+        </div>
+        <div class="ob-side">
+          <div class="ob-stage">
+            <div class="ch-list">
+              <div class="ch-item live">
+                <div class="ch-icon">💬</div>
+                <div class="ch-info">
+                  <div class="ch-name">Class channels</div>
+                  <div class="ch-sub">38 channels · one per section</div>
+                </div>
+                <div class="ch-switch"></div>
+              </div>
+              <div class="ch-item live">
+                <div class="ch-icon">📋</div>
+                <div class="ch-info">
+                  <div class="ch-name">Notice board</div>
+                  <div class="ch-sub">Categories · ack tracking</div>
+                </div>
+                <div class="ch-switch"></div>
+              </div>
+              <div class="ch-item live">
+                <div class="ch-icon">🌿</div>
+                <div class="ch-info">
+                  <div class="ch-name">School community feed</div>
+                  <div class="ch-sub">Events · reactions · culture</div>
+                </div>
+                <div class="ch-switch"></div>
+              </div>
+              <div class="ch-item live">
+                <div class="ch-icon">📚</div>
+                <div class="ch-info">
+                  <div class="ch-name">Attendance &amp; homework</div>
+                  <div class="ch-sub">Live for all classes</div>
+                </div>
+                <div class="ch-switch"></div>
+              </div>
+              <div class="ch-item live">
+                <div class="ch-icon">👤</div>
+                <div class="ch-info">
+                  <div class="ch-name">Student profiles</div>
+                  <div class="ch-sub">Long-term records, family links</div>
+                </div>
+                <div class="ch-switch"></div>
+              </div>
+            </div>
+
+            <div class="ob-banner">
+              <span class="pulse"></span>
+              <div>
+                <div class="lbl">All modules</div>
+                <div class="val">LIVE · branded for Greenfield</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===== STEP 4 ===== -->
+      <article class="ob-step" data-screen-label="Step 04" style="--accent: var(--coral);">
+        <div class="ob-num">04</div>
+        <div class="ob-side">
+          <span class="ob-pill"><span class="d"></span>Day two onwards · Run the year</span>
+          <h2>Run the year. <span class="italic-serif">Calmly.</span></h2>
+          <p class="desc">Then come next June, classes auto-promote. The 40 WhatsApp groups schools used to rebuild from scratch every year? They never need rebuilding again.</p>
+          <ul class="ob-tasks">
+            <li>Auto class promotion (V-A → VI-A)</li>
+            <li>Graduating cohort archived gracefully</li>
+            <li>New admissions added by simple CSV append</li>
+            <li>Student records persist across years</li>
+          </ul>
+          <div class="ob-time"><span class="icon"></span>0 manual work · forever</div>
+        </div>
+        <div class="ob-side">
+          <div class="ob-stage" style="display:flex;">
+            <div class="ro-stage" style="flex:1;">
+              <div class="ro-cal">
+                <div class="month">Academic year</div>
+                <div class="year">
+                  <span class="now">2025–26</span>
+                  <span class="next">2026–27</span>
+                </div>
+                <div class="grid">
+                  <span></span><span></span><span></span><span></span><span></span>
+                  <span></span><span></span><span></span><span></span><span></span>
+                  <span></span><span></span><span></span><span></span><span></span>
+                </div>
+                <span class="stamp">JUN 01</span>
+              </div>
+              <div class="ro-classes">
+                <div class="hd">Auto-rollover · 38 classes</div>
+                <div class="ro-cls">
+                  <div class="a">Class V-A <span class="ct">38</span></div>
+                  <div class="ar">→</div>
+                  <div class="b">Class VI-A <span class="ct">38</span></div>
+                </div>
+                <div class="ro-cls">
+                  <div class="a">Class V-B <span class="ct">36</span></div>
+                  <div class="ar">→</div>
+                  <div class="b">Class VI-B <span class="ct">36</span></div>
+                </div>
+                <div class="ro-cls">
+                  <div class="a">Class V-C <span class="ct">40</span></div>
+                  <div class="ar">→</div>
+                  <div class="b">Class VI-C <span class="ct">40</span></div>
+                </div>
+                <div class="ro-cls">
+                  <div class="a">Class V-D <span class="ct">39</span></div>
+                  <div class="ar">→</div>
+                  <div class="b">Class VI-D <span class="ct">39</span></div>
+                </div>
+                <div class="ro-done">
+                  <div class="tick">✓</div>
+                  <div>
+                    <div class="lbl">Complete</div>
+                    <div class="val">38 channels · 720 students moved</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- ===== Summary ===== -->
+    <div class="ob-summary" data-reveal>
+      <div>
+        <span class="eyebrow" style="color:var(--amber);">The honest math</span>
+        <h2 style="margin-top:14px;">A school can go from chaos to calm in a single day.</h2>
+        <p>Compare that to the months of IT setup most school management systems demand. classIQ was built so the principal — not an external vendor — can switch the school over.</p>
+      </div>
+      <div>
+        <div class="total"><span class="num">1</span><span class="unit">day · to fully live</span></div>
+        <ul class="ticks">
+          <li>No installation, no servers, no IT department</li>
+          <li>Pilot with one class first — risk-free</li>
+          <li>Migrations done by us if you'd rather not</li>
+          <li>Auto-rollover means year 2 setup is zero</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="padding: 80px 0 100px;">
+  <div class="container">
+    <div class="cta-band">
+      <div>
+        <span class="eyebrow">Try it on one class</span>
+        <h2 style="margin-top:14px;">Pilot classIQ on one class. <span class="italic-serif">Free, for a term.</span></h2>
+        <p>The easiest way to feel the difference. Pick one teacher and one class — we'll have you live in 48 hours.</p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <a href="contact.html" class="btn btn-primary btn-lg">Start a pilot →</a>
+        <a href="pricing.html" class="btn btn-ghost btn-lg">See pricing</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="index.html" class="brand brand-footer" aria-label="classIQ"><img src="assets/logo.png" alt="classIQ" /></a>
+        <p style="margin-top:14px; max-width:36ch; color:var(--muted);">One platform for communication, community and complete student management.</p>
+        <div style="margin-top:18px; font-size:13px; color:var(--muted-2); font-family:var(--font-mono);">classiq.in</div>
+      </div>
+      <div class="footer-col"><h4>Product</h4><ul><li><a href="features.html">All features</a></li><li><a href="who.html">Designed for</a></li><li><a href="onboarding.html">Onboarding</a></li><li><a href="pricing.html">Pricing</a></li></ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="roadmap.html">Roadmap</a></li></ul></div>
+      <div class="footer-col"><h4>Support</h4><ul><li><a href="contact.html">Contact</a></li><li><a href="#">Help centre</a></li></ul></div>
+      <div class="footer-col"><h4>Legal</h4><ul><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li><li><a href="#">DPDP</a></li></ul></div>
+    </div>
+    <div class="container footer-bottom"><div>© 2026 classIQ Technologies Pvt Ltd.</div><div>Made with care for Indian classrooms.</div></div>
+  </div>
+</footer>
+
+<script src="animations.js"></script>
+<script>
+  // Step animations on scroll-in
+  (function () {
+    const steps = document.querySelectorAll('.ob-step');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.18 });
+    steps.forEach(s => io.observe(s));
+  })();
+</script>
+</body>
+</html>

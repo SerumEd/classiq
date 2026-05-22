@@ -347,13 +347,8 @@
   display: block;
 }
 .b-phone .notch {
-  position: absolute;
-  top: 8px; left: 50%;
-  transform: translateX(-50%);
-  width: 60px; height: 12px;
-  background: #15151a;
-  border-radius: 0 0 8px 8px;
-  z-index: 2;
+  /* Android-style frame — no notch. Kept selector so existing markup doesn't need to change. */
+  display: none;
 }
 .bento-card:hover .b-phone { transform: translateY(-4px) rotate(-1deg); }
 
