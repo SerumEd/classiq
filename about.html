@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>About — classIQ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
+<style>
+  .about-hero { padding: 80px 0 32px; }
+  .principle {
+    padding: 28px 0;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 40px;
+  }
+  .principle .pnum {
+    font-family: var(--font-mono); font-size: 12px;
+    letter-spacing: 0.1em; color: var(--coral);
+  }
+  .principle h3 {
+    margin-top: 8px;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+  }
+  .principle p {
+    font-size: 16px; color: var(--ink-2); line-height: 1.6; max-width: 60ch;
+  }
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 40px;
+  }
+  .person {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .person-avatar {
+    aspect-ratio: 4/4;
+    background: repeating-linear-gradient(135deg, var(--cream-2) 0 12px, var(--paper) 12px 24px);
+    border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted-2);
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+  .person-meta { padding: 16px 18px; }
+  .person-name { font-size: 15px; font-weight: 500; }
+  .person-role { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .story {
+    padding: 64px 56px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .story-quote {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 26px;
+    line-height: 1.35;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+  }
+  .story-quote::before { content: "“"; font-size: 56px; color: var(--coral); display:block; line-height: .5; margin-bottom: 18px; }
+  .timeline {
+    margin-top: 16px;
+    border-left: 2px solid var(--line);
+    padding-left: 22px;
+    display: flex; flex-direction: column; gap: 28px;
+  }
+  .tl-item .tl-year {
+    font-family: var(--font-mono); font-size: 12px;
+    color: var(--teal-700); letter-spacing: 0.08em;
+  }
+  .tl-item .tl-title { font-size: 15px; font-weight: 500; margin-top: 4px; }
+  .tl-item .tl-body { font-size: 14px; color: var(--muted); margin-top: 4px; }
+  @media (max-width: 880px) {
+    .principle { grid-template-columns: 1fr; gap: 12px; }
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
+    .story { grid-template-columns: 1fr; padding: 32px 24px; gap: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="brand" aria-label="classIQ home"><img src="assets/logo.png" alt="classIQ" /></a>
+    <nav class="nav-links">
+      <a href="features.html">Features</a>
+      <a href="index.html#who">Who it's for</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="about.html" style="color:var(--teal-800); font-weight:500;">About</a>
+      <a href="#">Stories</a>
+      <a href="#">Blog</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#" class="btn btn-ghost">Sign in</a>
+      <a href="contact.html" class="btn btn-primary">Request a demo</a>
+    </div>
+  </div>
+</header>
+
+<section class="about-hero">
+  <div class="container-narrow">
+    <span class="eyebrow">Who we are</span>
+    <h1 style="margin-top:18px;">We're building the operating system <span class="italic-serif" style="color:var(--teal-700);">Indian schools deserve.</span></h1>
+    <p class="lede" style="margin-top:22px;">classIQ started in a school staff-room. A small team of teachers, parents and product builders watched a generation of educators stitch their jobs together from WhatsApp, paper diaries and printed circulars — and built the alternative.</p>
+  </div>
+</section>
+
+<!-- Story -->
+<section>
+  <div class="container">
+    <div class="story">
+      <div>
+        <span class="eyebrow">Our story</span>
+        <p class="story-quote" style="margin-top:24px;">A teacher should be able to send one message and trust that the right parents have actually read it. Not "probably seen it, somewhere in their phone." This is the bar we hold ourselves to — every feature, every release.</p>
+        <div style="margin-top:24px; font-size:14px; color:var(--muted);">
+          <strong style="color:var(--ink); font-weight:500;">Founding team</strong><br/>
+          classIQ Technologies Pvt Ltd · Bengaluru
+        </div>
+      </div>
+      <div>
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-year">2023</div>
+            <div class="tl-title">First pilot, one school</div>
+            <div class="tl-body">A K-8 school in Bengaluru piloted the very first version of classIQ across 12 classes.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">2024</div>
+            <div class="tl-title">Notice acknowledgement &amp; household profiles</div>
+            <div class="tl-body">Two of our most-requested-by-principals features ship. Phone-number sharing disappears.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">2025</div>
+            <div class="tl-title">Full apps for parents, teachers and students</div>
+            <div class="tl-body">Three native apps + a web admin console reach feature-completeness.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">2026</div>
+            <div class="tl-title">classiq.in launches</div>
+            <div class="tl-body">Open to any Indian school. Pilot programme available for new schools every term.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Principles -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">What we believe</span>
+      <h2 style="margin-top:14px;">Our principles.</h2>
+      <p class="lede">Four ideas that shape every decision we make about classIQ.</p>
+    </div>
+
+    <div class="principle">
+      <div><div class="pnum">P · 01</div><h3>Schools first, software second</h3></div>
+      <p>Every feature has to survive a Monday morning in a real classroom. If a feature looks great in a demo but slows down a class teacher with 38 students, it doesn't ship.</p>
+    </div>
+    <div class="principle">
+      <div><div class="pnum">P · 02</div><h3>Quiet by default</h3></div>
+      <p>The right number of notifications is the smallest one. Parents shouldn't have to mute us to live their day. Teachers shouldn't have to answer calls after hours.</p>
+    </div>
+    <div class="principle">
+      <div><div class="pnum">P · 03</div><h3>The school owns the graph</h3></div>
+      <p>The relationship between teacher and parent belongs to the school, not to a third-party chat app. classIQ is structured so a school's communication life is auditable, exportable and entirely its own.</p>
+    </div>
+    <div class="principle">
+      <div><div class="pnum">P · 04</div><h3>Built for India, built to last</h3></div>
+      <p>2G-friendly. Hindi, Kannada, Tamil, Marathi and Telugu language packs. DPDP-compliant. Hosted in Indian data centres. classIQ is built to outlast a single trend.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Team -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Team</span>
+      <h2 style="margin-top:14px;">A small, focused team.</h2>
+      <p class="lede">Teachers, parents and engineers building the school platform we wished existed when our kids started school.</p>
+    </div>
+
+    <div class="team-grid">
+      <div class="person">
+        <div class="person-avatar">[ FOUNDER PHOTO ]</div>
+        <div class="person-meta"><div class="person-name">Founder &amp; CEO</div><div class="person-role">Product, fundraising</div></div>
+      </div>
+      <div class="person">
+        <div class="person-avatar">[ FOUNDER PHOTO ]</div>
+        <div class="person-meta"><div class="person-name">Co-founder &amp; CTO</div><div class="person-role">Engineering, mobile</div></div>
+      </div>
+      <div class="person">
+        <div class="person-avatar">[ TEAM PHOTO ]</div>
+        <div class="person-meta"><div class="person-name">Head of School Success</div><div class="person-role">Onboarding, support</div></div>
+      </div>
+      <div class="person">
+        <div class="person-avatar">[ TEAM PHOTO ]</div>
+        <div class="person-meta"><div class="person-name">Head of Design</div><div class="person-role">Product design, brand</div></div>
+      </div>
+    </div>
+    <p style="margin-top:24px; font-size:13px; color:var(--muted);">Photos are placeholders — replace with your team's actual portraits.</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section>
+  <div class="container">
+    <div class="cta-band">
+      <div>
+        <h2>Want to bring classIQ to your school?</h2>
+        <p>We'd love to show you what your daily operation looks like on a single, calm platform.</p>
+      </div>
+      <a href="contact.html" class="btn btn-primary btn-lg">Talk to us →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="index.html" class="brand brand-footer" aria-label="classIQ"><img src="assets/logo.png" alt="classIQ" /></a>
+        <p style="margin-top:14px; max-width:36ch; color:var(--muted);">One platform for communication, community and complete student management.</p>
+        <div style="margin-top:18px; font-size:13px; color:var(--muted-2); font-family:var(--font-mono);">classiq.in</div>
+      </div>
+      <div class="footer-col"><h4>Product</h4><ul><li><a href="features.html">All features</a></li><li><a href="index.html#who">For schools</a></li><li><a href="pricing.html">Pricing</a></li></ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="#">Stories</a></li><li><a href="#">Blog</a></li></ul></div>
+      <div class="footer-col"><h4>Support</h4><ul><li><a href="contact.html">Contact</a></li><li><a href="#">Help centre</a></li></ul></div>
+      <div class="footer-col"><h4>Legal</h4><ul><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li><li><a href="#">DPDP</a></li></ul></div>
+    </div>
+    <div class="container footer-bottom"><div>© 2026 classIQ Technologies Pvt Ltd.</div><div>Made with care for Indian classrooms.</div></div>
+  </div>
+</footer>
+
+</body>
+</html>
