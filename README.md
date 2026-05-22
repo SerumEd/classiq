@@ -112,4 +112,3 @@ The tweaks panel (theme / font / layout toggles) is a **preview-only** affordanc
 ## License
 
 © 2026 classIQ Technologies Pvt Ltd. All rights reserved.
-# classiq

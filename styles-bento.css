@@ -15,7 +15,6 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  min-height: 280px;
   transition: transform .35s cubic-bezier(.2,.7,.2,1),
               box-shadow .35s ease,
               border-color .25s ease,
@@ -28,6 +27,7 @@
               0 4px 10px -4px rgba(11,42,48,.08);
 }
 .bento-card.span-2 { grid-column: span 2; }
+.bento-card.span-3 { grid-column: span 3; }
 .bento-card.dark {
   background: var(--ink);
   color: var(--cream);
@@ -66,8 +66,8 @@
 }
 .bento-card.dark .bento-desc { color: color-mix(in oklab, var(--cream) 72%, transparent); }
 .bento-visual {
-  margin-top: auto;
-  padding-top: 20px;
+  margin-top: 22px;
+  padding-top: 0;
   position: relative;
 }
 
@@ -315,6 +315,194 @@
   display: flex;
   justify-content: center;
 }
+
+/* ============ App / Browser frames inside bento ============ */
+
+/* Phone frame for mobile app screenshots */
+.b-phone {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  aspect-ratio: 9/19.5;
+  max-width: 180px;
+  background: #15151a;
+  border-radius: 22px;
+  padding: 6px;
+  box-shadow: 0 24px 50px -24px rgba(11,42,48,.4),
+              0 6px 14px -6px rgba(11,42,48,.18);
+  border: 1px solid #2a2a30;
+  transition: transform .4s cubic-bezier(.2,.7,.2,1);
+}
+.b-phone .b-phone-inner {
+  width: 100%; height: 100%;
+  background: #fff;
+  border-radius: 17px;
+  overflow: hidden;
+  position: relative;
+}
+.b-phone img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+.b-phone .notch {
+  position: absolute;
+  top: 8px; left: 50%;
+  transform: translateX(-50%);
+  width: 60px; height: 12px;
+  background: #15151a;
+  border-radius: 0 0 8px 8px;
+  z-index: 2;
+}
+.bento-card:hover .b-phone { transform: translateY(-4px) rotate(-1deg); }
+
+/* Dual phones, slightly fanned (for events / chat) */
+.b-phones-dual {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: center;
+  position: relative;
+}
+.b-phones-dual .b-phone:first-child {
+  transform: rotate(-3deg) translateY(8px);
+  max-width: 150px;
+}
+.b-phones-dual .b-phone:last-child {
+  transform: rotate(3deg);
+  max-width: 150px;
+}
+.bento-card:hover .b-phones-dual .b-phone:first-child {
+  transform: rotate(-5deg) translateY(2px);
+}
+.bento-card:hover .b-phones-dual .b-phone:last-child {
+  transform: rotate(5deg) translateY(-4px);
+}
+
+/* Browser frame for web app screenshots */
+.b-browser {
+  background: #fff;
+  border: 1px solid color-mix(in oklab, var(--cream) 14%, var(--line));
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 18px 40px -20px rgba(11,42,48,.3),
+              0 4px 10px -4px rgba(11,42,48,.1);
+  transition: transform .4s cubic-bezier(.2,.7,.2,1);
+}
+
+/* Laptop frame for admin/web showcases */
+.b-laptop {
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  position: relative;
+  transition: transform .4s cubic-bezier(.2,.7,.2,1);
+}
+.b-laptop .b-laptop-screen {
+  background: #15151a;
+  border-radius: 14px 14px 4px 4px;
+  padding: 12px 12px 14px;
+  box-shadow: 0 18px 40px -18px rgba(11,42,48,.35),
+              0 4px 10px -4px rgba(11,42,48,.1);
+  position: relative;
+}
+.b-laptop .b-laptop-screen::before {
+  content: "";
+  position: absolute;
+  top: 4px; left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 4px;
+  background: #2a2a30;
+  border-radius: 2px;
+}
+.b-laptop .b-laptop-inner {
+  background: #fff;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid #2a2a30;
+  display: block;
+}
+.b-laptop .b-laptop-inner img {
+  width: 100%;
+  display: block;
+}
+.b-laptop .b-laptop-base {
+  height: 14px;
+  background: linear-gradient(180deg, #cdcdd3 0%, #9a9aa1 50%, #6c6c74 100%);
+  border-radius: 0 0 22px 22px;
+  position: relative;
+  margin: -3px -22px 0;
+  filter: drop-shadow(0 14px 18px rgba(11,42,48,.12));
+}
+.b-laptop .b-laptop-base::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 5px;
+  background: #6c6c74;
+  border-radius: 0 0 8px 8px;
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.2);
+}
+.bento-card:hover .b-laptop { transform: translateY(-4px); }
+.b-browser-bar {
+  background: color-mix(in oklab, var(--cream) 50%, var(--paper));
+  border-bottom: 1px solid var(--line);
+  padding: 7px 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.b-browser-bar .tlights {
+  display: flex; gap: 4px;
+}
+.b-browser-bar .tlights span {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--line);
+}
+.b-browser-bar .tlights span:nth-child(1) { background: #f7b3a3; }
+.b-browser-bar .tlights span:nth-child(2) { background: #fadeb1; }
+.b-browser-bar .tlights span:nth-child(3) { background: #b8dad1; }
+.b-browser-bar .url {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--muted-2);
+  background: var(--paper);
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--line);
+  margin-left: 4px;
+}
+.b-browser img {
+  width: 100%;
+  display: block;
+}
+.bento-card:hover .b-browser { transform: translateY(-3px); }
+
+/* Coming-soon hero illustration (for attendance, payroll etc.) */
+.b-illus {
+  background: linear-gradient(180deg,
+    color-mix(in oklab, var(--teal-50) 60%, var(--paper)),
+    var(--paper));
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px;
+  position: relative;
+  overflow: hidden;
+}
+.b-illus.coral {
+  background: linear-gradient(180deg,
+    color-mix(in oklab, var(--coral) 12%, var(--paper)),
+    var(--paper));
+}
+.b-illus.amber {
+  background: linear-gradient(180deg,
+    color-mix(in oklab, var(--amber) 14%, var(--paper)),
+    var(--paper));
+}
+
+/* Bento footer link */
 .bento-foot a {
   font-size: 14px;
   color: var(--teal-700);
@@ -333,11 +521,12 @@
 @media (max-width: 1024px) {
   .bento { grid-template-columns: repeat(2, 1fr); }
   .bento-card.span-2 { grid-column: span 2; }
+  .bento-card.span-3 { grid-column: span 2; }
 }
 @media (max-width: 640px) {
   .bento { grid-template-columns: 1fr; }
   .bento-card.span-2 { grid-column: span 1; }
-  .bento-card { min-height: 220px; }
+  .bento-card.span-3 { grid-column: span 1; }
 }
 
 /* ============ Site-wide motion ============ */

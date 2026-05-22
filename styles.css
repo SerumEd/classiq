@@ -507,8 +507,8 @@ section { padding: 84px 0; }
 /* ============ Coming soon ============ */
 .coming-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
 }
 .coming-card {
   background: var(--paper);
@@ -726,7 +726,8 @@ footer {
   .problem-grid { grid-template-columns: repeat(2, 1fr); }
   .features-grid { grid-template-columns: repeat(2, 1fr); }
   .howitworks { grid-template-columns: repeat(2, 1fr); }
-  .coming-grid, .pricing-cards { grid-template-columns: 1fr; }
+  .coming-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  .pricing-cards { grid-template-columns: 1fr; }
   .roles { grid-template-columns: 1fr; padding: 28px; }
   .solution-stats { grid-template-columns: repeat(2, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
