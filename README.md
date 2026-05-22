@@ -14,24 +14,32 @@ Open `index.html` directly in a browser, or host the folder anywhere that serves
 
 ## Pages
 
+The marketing site is a **single-page experience**. All nav tabs are in-page anchors.
+
 | File | Purpose |
 | --- | --- |
-| `index.html` | Home — hero, problem carousel, solution, 12-feature bento, pricing teaser, CTA |
-| `features.html` | All 12 features with UI mocks |
-| `who.html` | "Designed for" — admin / teacher / parent / student personas, each with animated scenes |
-| `onboarding.html` | 4-step animated walkthrough from CSV import to running the year |
-| `pricing.html` | Plans + FAQ |
-| `roadmap.html` | What's coming next — fees, exams, staff attendance, payroll, bus tracking |
-| `about.html` | Team pedigree, principles, origin |
+| `index.html` | The entire site — hero, problem, solution, features, designed-for, onboarding, pricing, roadmap, about |
 | `contact.html` | Demo request form (front-end only — wire to your CRM) |
+
+Sections inside `index.html` (linked from the nav):
+
+| Anchor | Content |
+| --- | --- |
+| `#features` | All 8 live modules with UI mocks |
+| `#designed` | Admin / teacher / parent / student personas with animated scenes |
+| `#onboarding` | Animated 4-step onboarding walkthrough |
+| `#pricing` | Plans + FAQ |
+| `#roadmap` | What's coming next — fees, exams, staff attendance, payroll, bus tracking |
+| `#about` | Team pedigree, principles, origin |
 
 ## Shared resources
 
 ```
-styles.css                 # Global design tokens, layout, components
-styles-bento.css           # Bento grid + phone frames
-animations.js              # IntersectionObserver scroll-reveal
-assets/                    # Logo + UI screenshots
+styles.css            # Global design tokens, layout, components
+styles-bento.css      # Phone frames + reusable mock surfaces
+sections.css          # Per-section custom styles (features, persona scenes, onboarding, roadmap, about)
+animations.js         # IntersectionObserver scroll-reveal
+assets/               # Logo + UI screenshots
 ```
 
 ## Hosting on GitHub Pages
