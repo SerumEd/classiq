@@ -1,4 +1,4 @@
-// Tweaks app for classIQ landing — exposes theme variants and layout knobs.
+// Tweaks app for ClassIQ landing — exposes theme variants and layout knobs.
 
 const THEMES = {
   "teal-coral": {

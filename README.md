@@ -1,4 +1,4 @@
-# classIQ — Company Website
+# ClassIQ — Company Website
 
 Marketing website for **classiq.in** — a structured school communication and student management platform, built in India for Indian schools.
 
@@ -64,4 +64,4 @@ Then visit http://localhost:8000.
 
 ## License
 
-© 2026 classIQ Technologies Pvt Ltd. All rights reserved.
+© 2026 ClassIQ Technologies Pvt Ltd. All rights reserved.
