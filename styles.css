@@ -915,15 +915,15 @@ section { padding: 84px 0; }
   padding-top: 40px;
 }
 .stat .stat-val {
-  font-size: clamp(56px, 5.6vw, 80px);
+  font-size: clamp(72px, 7vw, 104px);
   letter-spacing: -0.04em;
   line-height: 1;
   font-weight: 500;
 }
-.stat .stat-val .small { font-size: clamp(20px, 1.8vw, 26px); color: var(--amber); margin-left: 4px; }
+.stat .stat-val .small { font-size: clamp(26px, 2.2vw, 34px); color: var(--amber); margin-left: 4px; }
 .stat .stat-lbl {
   margin-top: 14px;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.45;
   color: color-mix(in oklab, var(--cream) 75%, transparent);
   max-width: 22ch;
